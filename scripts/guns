@@ -1,0 +1,42 @@
+local player = game.Players.LocalPlayer
+
+local mp5 = Instance.new("Tool")
+mp5.Name = "MP5"
+mp5.GripPos = Vector3.new(0, 0, 0)
+mp5.GripRight = Vector3.new(0, 0, 1)
+mp5.GripUp = Vector3.new(0, 1, 0)
+mp5.GripForward = Vector3.new(-1, 0, 0)
+mp5.TextureId = "http://www.roblox.com/asset/?id=141464417"
+
+mp5.Handle.BrickColor = BrickColor.new("Dark stone grey")
+
+player.Backpack:Insert(mp5)
+player.Character:FindFirstChildOfClass("Humanoid"):EquipTool(mp5)
+
+if mp5 and mp5.Parent == player.Character then
+	local sound = Instance.new("Sound")
+	sound.SoundId = "rbxassetid://1905367471" 
+	sound.Parent = mp5
+
+	local particle = Instance.new("ParticleEmitter")
+	particle.Texture = "rbxassetid://580455093" 
+	particle.Parent = mp5
+
+	function fire()
+		sound:Play()
+		particle:Emit(1)
+
+		local bullet = Instance.new("Part")
+		bullet.Shape = "Ball"
+		bullet.Size = Vector3.new(0.5, 0.5, 0.5)
+		bullet.BrickColor = BrickColor.new("Bright blue")
+		bullet.Velocity = player.Character.HumanoidRootPart.CFrame.lookVector * 100
+		bullet.Parent = workspace
+
+		wait(1)
+		bullet:Destroy()
+	end
+	
+	mp5.Activated:Connect(fire)
+end
+print("u got a gun lol!")
